@@ -26,7 +26,6 @@ class App extends React.Component {
   success(position) {
     const lat = position.coords.latitude;
     const long = position.coords.longitude;
-    console.log(lat, long);
     this.updateCoordinatesAndFetch(lat, long);
   }
 
@@ -80,8 +79,8 @@ class App extends React.Component {
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(this.success, this.failure);
-    //trigger a data refresh every 10 seconds
-    setInterval(this.periodicFetch, 10000);
+    //trigger a data refresh every 60 seconds
+    setInterval(this.periodicFetch, 60000);
   }
 
   render() {

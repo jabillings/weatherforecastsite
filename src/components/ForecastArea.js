@@ -11,10 +11,6 @@ const mapOfDataNameToDisplayName = {
 };
 
 class ForecastArea extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   generateWeatherData(frequency, index) {
     //handle errors
     if (this.props.failure) {
@@ -34,8 +30,6 @@ class ForecastArea extends React.Component {
       default:
         actualData = this.props.data.currently;
     }
-
-    console.log(this.props.data);
     let weatherData = [];
     let key;
     for (key in actualData) {

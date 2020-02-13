@@ -19,19 +19,13 @@ class LocationInput extends React.Component {
     const latitude = this.state.latitude;
     const longitude = this.state.longitude;
     //validate values
-    if (
-      latitude < -90 ||
-      latitude > 90 ||
-      (longitude < -180 || longitude > 180)
-    ) {
-      this.setState({
-        invalid: true
-      });
-    } else {
-      this.setState({
-        invalid: false
-      });
-      this.props.newCoordHandler(latitude, longitude);
+    const inputInvalid = isInputInvalid(latitude, longitude);
+    this.setState({
+      invalid: inputInvalid
+    });
+    //send coordiantes off to the parent component if valid
+    if (!inputInvalid) {
+      this.props.newCoordHandler(parseInt(latitude), parseInt(longitude));
     }
   }
 
@@ -55,6 +49,7 @@ class LocationInput extends React.Component {
     //ONLY DIFFERENCE HERE IS THE ERROR MESSAGE FOR INVALID INPUTS,
     //WOULD LIKE TO CLEAN UP TO REDUCE HTML JSX BUT
     //ONLY IF I HAVE TIME
+    console.log(this.state.invalid);
     if (!this.state.invalid) {
       return (
         <div className="Latitude-input">
@@ -105,4 +100,20 @@ class LocationInput extends React.Component {
   }
 }
 
+function isInputInvalid(latitude, longitude) {
+  //make sure we can use numbers
+  if (isNaN(latitude) || isNaN(longitude)) {
+    return true;
+  }
+
+  //be safe
+  latitude = parseInt(latitude);
+  longitude = parseInt(longitude);
+
+  return (
+    latitude < -90 || latitude > 90 || (longitude < -180 || longitude > 180)
+  );
+}
+
+export { isInputInvalid };
 export default LocationInput;
